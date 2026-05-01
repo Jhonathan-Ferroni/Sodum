@@ -1,0 +1,12 @@
+# Pastas de compilação do Visual Studio
+bin/
+obj/
+
+# Arquivos de configurações locais do desenvolvedor
+appsettings.Development.json
+appsettings.Local.json
+
+# Arquivos de sistema e cache
+.vs/
+*.user
+*.suo
