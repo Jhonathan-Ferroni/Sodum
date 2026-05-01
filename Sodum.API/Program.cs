@@ -4,10 +4,10 @@ using Sodum.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+//builder.Services.AddDbContext<AppDbContext>(options =>
+  //  options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Configurando o serviço do Last.fm usando o padrão de HttpClient tipado
 builder.Services.AddHttpClient<ILastFmService, LastFmService>();
