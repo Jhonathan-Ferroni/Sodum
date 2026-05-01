@@ -17,11 +17,19 @@ builder.Services.AddHttpClient<IRecommendationEngine, LlmRecommendationEngine>()
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("SodumPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins(
+                    "sodum-ui.vercel.app",
+                    "https://sodum-api.onrender.com",
+                    "https://www.sodum.com",           // Domínio oficial de produção do Sodum
+                    "https://sodum.com",               // Variação sem www
+                    "http://localhost:3000",           // Testes locais (ex: React/Next.js)
+                    "http://localhost:5173"            // Testes locais (ex: Vite)
+               )
+              .WithMethods("GET", "POST", "PUT", "DELETE") // Métodos estritamente necessários
+              .WithHeaders("Content-Type", "Authorization") // Cabeçalhos permitidos
+              .AllowCredentials(); // Segurança para cookies e tokens de autenticação
     });
 });
 
