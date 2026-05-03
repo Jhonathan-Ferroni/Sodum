@@ -1,49 +1,56 @@
-# Sodum
+# Sodum 🎲🎵
 
-Projeto fullstack com API e Frontend para o site https://sodum.vercel.app/. O objetivo do projeto é fornecer uma aplicação moderna, responsiva e com backend em C# capaz de atender a interface web.
+**Sodum** é um motor de recomendação inteligente focado em **jogos e música**, impulsionado por Inteligência Artificial (LLMs). O projeto está atualmente em **desenvolvimento ativo**, com o objetivo de entregar uma aplicação web moderna que conecte os usuários aos seus próximos jogos favoritos e novas descobertas musicais através de integrações e análises de IA.
 
-## Visão geral
+A interface da aplicação pode ser acessada em: [sodum.vercel.app](https://sodum.vercel.app/)
 
-- Frontend: interface web disponível em https://sodum.vercel.app/
-- API: backend em C# para operações e dados do sistema
-- Arquitetura: separação clara entre API e Frontend para facilitar manutenção e evolução
+## 🚀 Funcionalidades (Em Desenvolvimento)
 
-## Funcionalidades
+- **Motor de Recomendação via IA:** Geração de sugestões contextuais e personalizadas de jogos e músicas através do consumo de APIs de LLM.
+- **Integração de APIs Externas:** Conexão com serviços de inteligência artificial e bancos de dados de entretenimento.
+- **Interface Web Dinâmica:** Layout responsivo e focado na experiência do usuário (UX) para facilitar o consumo das recomendações.
+- **Arquitetura Desacoplada:** Separação clara de responsabilidades, garantindo uma comunicação RESTful robusta entre a interface e o servidor.
 
-- Autenticação e autorização de usuários
-- Consumo de dados pela interface web
-- Layout responsivo para desktop e mobile
-- Integração entre front e back com chamadas REST
+ ![Screenshot 1](media/1.png)
 
-## Tecnologias
+## 💻 Tecnologias
 
-- Backend: C# (.NET)
-- Frontend: HTML, CSS, JavaScript/React ou framework equivalente
-- API RESTful
-- Deploy: Vercel para frontend
+**Backend:**
+- C# / ASP.NET Core (Web API)
+- Banco de Dados MySQL
+- Integração com APIs de LLMs
 
-## Screenshots
+**Frontend:**
+- React (JavaScript, HTML, CSS)
+- Deploy contínuo na Vercel
 
-![Screenshot 1](media/1.png)
-![Screenshot 2](media/2.png)
+ ![Screenshot 2](media/2.png)
+
 ![Screenshot 3](media/3.png)
 
-## Estrutura do projeto
+## 📂 Estrutura do Projeto
 
-- `api/` - código do backend em C# (.NET)
-- `front/` - código da aplicação web
-- `README.md` - documentação do projeto
+- `api/` - Código fonte do backend responsável pela lógica de negócios e integrações com IA (.NET).
+- `front/` - Código fonte da aplicação web de interface com o usuário.
+- `README.md` - Documentação principal do projeto.
 
-## Como rodar localmente
+## ⚙️ Como rodar localmente
 
-1. Clone o repositório:
+### Pré-requisitos
+- [.NET SDK](https://dotnet.microsoft.com/download)
+- [Node.js](https://nodejs.org/) e npm
+- Servidor MySQL rodando localmente ou em nuvem.
 
+### Passos para inicialização
+
+1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/sodum.git
+   git clone [https://github.com/seu-usuario/sodum.git](https://github.com/seu-usuario/sodum.git)
    ```
 
-2. Abra a pasta do backend e restaure dependências:
-
+2. **Subindo a API (Backend):**
+   Navegue até a pasta da API, baixe os pacotes e rode o projeto. 
+   *Nota: Lembre-se de configurar sua string de conexão do MySQL e as chaves das APIs de LLM no seu `appsettings.Development.json`.*
    ```bash
    cd sodum/api
    dotnet restore
@@ -51,21 +58,17 @@ Projeto fullstack com API e Frontend para o site https://sodum.vercel.app/. O ob
    dotnet run
    ```
 
-3. Abra a pasta do frontend e instale dependências:
-
+3. **Subindo a Interface (Frontend):**
+   Em um novo terminal, acesse a pasta do front-end e inicie o servidor de desenvolvimento.
    ```bash
-   cd ../front
+   cd sodum/front
    npm install
    npm run dev
    ```
 
-4. Acesse a aplicação no navegador em `http://localhost:3000` ou na porta configurada.
+4. **Acesse:** Abra seu navegador em `http://localhost:3000` (ou na porta indicada pelo terminal do React/Vite) para ver o projeto rodando, já consumindo a API local na porta configurada pelo .NET.
 
-## Implantação
 
-- Frontend implantado em Vercel: https://sodum.vercel.app/
-- Backend pode ser publicado em Azure, AWS, Heroku ou outro serviço compatível com .NET
 
-## Contato
-
-Para dúvidas ou sugestões, entre em contato com o responsável pelo projeto.
+Este projeto está sendo desenvolvido e aprimorado ativamente. Para dúvidas sobre a arquitetura da aplicação ou o funcionamento das integrações com os LLMs, sinta-se à vontade para abrir uma *issue* no repositório.
+```
