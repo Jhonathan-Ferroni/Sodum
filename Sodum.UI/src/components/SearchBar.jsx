@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+// IMPORTANTE: Ajuste o caminho para a sua pasta services
+import api from "./services/api";
 
 const SearchBar = ({ query, setQuery, searchType }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -8,19 +10,19 @@ const SearchBar = ({ query, setQuery, searchType }) => {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
-      // Só busca se tiver 3 letras ou mais e se as sugestões estiverem ativas (evita buscar quando seleciona)
       if (query.trim().length >= 3 && showSuggestions) {
         setIsLoading(true);
         try {
-          // Traduz o searchType do seu App.jsx para a sua API .NET
           const tipoApi = searchType === "Game" ? "jogo" : "musica";
-          const API_URL = `http://localhost:5227/api/search/autocomplete?q=${encodeURIComponent(query)}&tipo=${tipoApi}`;
 
-          const response = await fetch(API_URL);
-          if (response.ok) {
-            const data = await response.json();
-            setSuggestions(data);
-          }
+          // Usando o seu 'api' configurado, ele já sabe apontar pro Render!
+          // Só precisamos passar a rota final
+          const response = await api.get(
+            `/search/autocomplete?q=${encodeURIComponent(query)}&tipo=${tipoApi}`,
+          );
+
+          // Axios entrega o JSON direto em response.data
+          setSuggestions(response.data);
         } catch (error) {
           console.error("Erro ao buscar sugestões:", error);
         } finally {
@@ -34,18 +36,16 @@ const SearchBar = ({ query, setQuery, searchType }) => {
     return () => clearTimeout(delayDebounceFn);
   }, [query, searchType, showSuggestions]);
 
-  // Quando o usuário digita algo
   const handleChange = (e) => {
     setQuery(e.target.value);
-    setShowSuggestions(true); // Abre a caixa de sugestões
+    setShowSuggestions(true);
   };
 
-  // Navegação por teclado
   const handleKeyDown = (e) => {
     if (!showSuggestions || suggestions.length === 0) return;
 
     if (e.key === "Enter") {
-      e.preventDefault(); // Evita que o Enter envie o formulário principal imediatamente
+      e.preventDefault();
       const selected = suggestions[activeSuggestion];
       setQuery(selected.nome);
       setShowSuggestions(false);
@@ -58,10 +58,9 @@ const SearchBar = ({ query, setQuery, searchType }) => {
     }
   };
 
-  // Quando clica em uma sugestão
   const handleSelect = (nome) => {
     setQuery(nome);
-    setShowSuggestions(false); // Fecha a lista
+    setShowSuggestions(false);
   };
 
   return (
@@ -76,7 +75,6 @@ const SearchBar = ({ query, setQuery, searchType }) => {
             ? "Ex: Resident Evil, Skyrim..."
             : "Ex: System of a Down..."
         }
-        // Aplica o estilo que o seu .input-group > input provavelmente já tem
         style={{
           width: "100%",
           padding: "10px",
@@ -99,7 +97,7 @@ const SearchBar = ({ query, setQuery, searchType }) => {
             top: "100%",
             left: 0,
             right: 0,
-            backgroundColor: "#1e1e1e", // Cor escura para combinar com seu layout
+            backgroundColor: "#1e1e1e",
             color: "#fff",
             border: "1px solid #333",
             borderRadius: "4px",
@@ -127,7 +125,7 @@ const SearchBar = ({ query, setQuery, searchType }) => {
                   style={{
                     padding: "12px 10px",
                     cursor: "pointer",
-                    backgroundColor: isActive ? "#333" : "transparent", // Destaque ao passar o mouse
+                    backgroundColor: isActive ? "#333" : "transparent",
                     display: "flex",
                     justifyContent: "space-between",
                     borderBottom: "1px solid #2a2a2a",
