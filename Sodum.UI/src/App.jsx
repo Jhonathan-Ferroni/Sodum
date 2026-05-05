@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "./services/api";
+import SearchBar from "./components/SearchBar"; // IMPORTANTE: Ajuste o caminho se o SearchBar estiver em outra pasta (ex: ./components/SearchBar)
 import "./App.css";
 
 function App() {
@@ -18,7 +19,6 @@ function App() {
     setResult(null);
 
     try {
-      // Monta a rota dinamicamente dependendo do que o usuário escolheu
       const endpoint =
         searchType === "Game"
           ? `/Game/recommend?gameName=${query}`
@@ -61,17 +61,17 @@ function App() {
             </button>
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder={
-                searchType === "Game"
-                  ? "Ex: Resident Evil, Skyrim..."
-                  : "Ex: System of a Down, DaBaby..."
-              }
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+          <div
+            className="input-group"
+            style={{ position: "relative", display: "flex", gap: "10px" }}
+          >
+            {/* AQUI ESTÁ A NOSSA BARRA CUSTOMIZADA */}
+            <SearchBar
+              query={query}
+              setQuery={setQuery}
+              searchType={searchType}
             />
+
             <button type="submit" disabled={loading}>
               {loading ? "Pensando..." : "Recomendar"}
             </button>
@@ -82,7 +82,6 @@ function App() {
 
         {result && (
           <div className="results-container">
-            {/* Bloco do Item Original (Jogo ou Música pesquisada) */}
             <div className="original-item">
               <h2>
                 Baseado em:{" "}
@@ -97,7 +96,6 @@ function App() {
               )}
             </div>
 
-            {/* Bloco das Recomendações da IA */}
             <div className="recommendations-grid">
               <h3>Recomendações da IA:</h3>
               {result.recommendations.map((rec, index) => (

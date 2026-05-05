@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Configurando o serviço do Last.fm usando o padrão de HttpClient tipado
 builder.Services.AddHttpClient<ILastFmService, LastFmService>();
 builder.Services.AddHttpClient<ISteamService, SteamService>();
+builder.Services.AddHttpClient<ILastFmServiceSearch, LastFmServiceSearch>();
 
 builder.Services.AddHttpClient<IRecommendationEngine, LlmRecommendationEngine>();
 
