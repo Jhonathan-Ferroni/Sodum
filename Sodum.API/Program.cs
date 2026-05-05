@@ -18,18 +18,21 @@ builder.Services.AddHttpClient<IRecommendationEngine, LlmRecommendationEngine>()
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("SodumPolicy", policy =>
+    options.AddPolicy("SodumPolicy", policy => // Criando a política com este nome
     {
         policy.WithOrigins(
-                    "sodum-ui.vercel.app",
+                    "https://sodum.vercel.app",        // CORRIGIDO: URL exata do print com https://
+                    "https://sodum-ui.vercel.app",     // Mantido caso você use este alias no Vercel
                     "https://sodum-api.onrender.com",
                     "https://www.sodum.com",           // Domínio oficial de produção do Sodum
                     "https://sodum.com",               // Variação sem www
                     "http://localhost:3000",           // Testes locais (ex: React/Next.js)
                     "http://localhost:5173"            // Testes locais (ex: Vite)
                )
-              .WithMethods("GET", "POST", "PUT", "DELETE") // Métodos estritamente necessários
-              .WithHeaders("Content-Type", "Authorization") // Cabeçalhos permitidos
+              // Adicionado o OPTIONS que é vital para o preflight do navegador
+              .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") 
+              // AllowAnyHeader é mais seguro aqui para não bloquear Accept, Origin, etc.
+              .AllowAnyHeader() 
               .AllowCredentials(); // Segurança para cookies e tokens de autenticação
     });
 });
@@ -45,10 +48,10 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+// CORRIGIDO: Chamando exatamente o nome da política que foi configurada acima
+app.UseCors("SodumPolicy"); 
 
 app.UseAuthorization();
 
