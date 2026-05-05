@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // IMPORTANTE: Ajuste o caminho para a sua pasta services
-import api from "./services/api";
+import api from "../services/api";
 
 const SearchBar = ({ query, setQuery, searchType }) => {
   const [suggestions, setSuggestions] = useState([]);
